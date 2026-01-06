@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { LightOnIcon, PlugIcon, PersonIcon, EnergyIcon, PowerIcon, UserIcon } from './SmartBuildingIcons'
+import { LightOnIcon, PlugIcon, PersonIcon, EnergyIcon, PowerIcon, UserIcon, AirConditionerIcon } from './SmartBuildingIcons'
 import AIAnalysis from './AIAnalysis'
 import './MiddleColumn.css'
 
@@ -147,9 +147,11 @@ interface MiddleColumnProps {
   onFloorClick?: (floor: string, roomCount: number, rooms: Array<{ name: string }>) => void // 楼层点击回调，传递楼层、房间数量和房间列表
   onRoomClick?: (floor: string, roomName: string) => void // 房间点击回调，传递楼层和房间名称
   onFloorPlanClick?: (floor: string, roomName: string) => void // 平面图点击回调，传递楼层和房间名称
+  onACFloorPlanClick?: (floor: string) => void // 空调平面图点击回调，传递楼层
+  onLightFloorPlanClick?: (floor: string) => void // 照明平面图点击回调，传递楼层
 }
 
-const MiddleColumn: React.FC<MiddleColumnProps> = ({ showAIAnalysis = true, showBuildingSelector = false, showRoomActions = true, showUserTimeInfo = true, onFloorClick, onRoomClick, onFloorPlanClick }) => {
+const MiddleColumn: React.FC<MiddleColumnProps> = ({ showAIAnalysis = true, showBuildingSelector = false, showRoomActions = true, showUserTimeInfo = true, onFloorClick, onRoomClick, onFloorPlanClick, onACFloorPlanClick, onLightFloorPlanClick }) => {
   const navigate = useNavigate()
   const [selectedBuilding, setSelectedBuilding] = useState('综合楼')
   const [selectedFloor, setSelectedFloor] = useState<string | null>(null)
@@ -188,14 +190,29 @@ const MiddleColumn: React.FC<MiddleColumnProps> = ({ showAIAnalysis = true, show
     return acc
   }, {} as Record<string, RoomData[]>)
 
-  // 计算每个楼层的总用电量和总功率
+  // 计算每个楼层的总用电量和总功率，以及空调和照明的用电量和功率
   const floorStats = Object.entries(groupedRooms).map(([floor, rooms]) => {
     const totalEnergy = rooms.reduce((sum, room) => sum + room.energy, 0)
     const totalPower = rooms.reduce((sum, room) => sum + room.power, 0)
+    
+    // 计算空调的用电量和功率（只统计空调开启的房间）
+    const acRooms = rooms.filter(room => room.acOn)
+    const acEnergy = acRooms.reduce((sum, room) => sum + room.energy, 0)
+    const acPower = acRooms.reduce((sum, room) => sum + room.power, 0)
+    
+    // 计算照明的用电量和功率（只统计照明开启的房间）
+    const lightRooms = rooms.filter(room => room.lightOn)
+    const lightEnergy = lightRooms.reduce((sum, room) => sum + room.energy, 0)
+    const lightPower = lightRooms.reduce((sum, room) => sum + room.power, 0)
+    
     return {
       floor,
       totalEnergy: totalEnergy.toFixed(1),
-      totalPower: (totalPower / 1000).toFixed(1) // 转换为kW
+      totalPower: (totalPower / 1000).toFixed(1), // 转换为kW
+      acEnergy: acEnergy.toFixed(1),
+      acPower: (acPower / 1000).toFixed(1), // 转换为kW
+      lightEnergy: lightEnergy.toFixed(1),
+      lightPower: (lightPower / 1000).toFixed(1) // 转换为kW
     }
   })
 
@@ -203,7 +220,15 @@ const MiddleColumn: React.FC<MiddleColumnProps> = ({ showAIAnalysis = true, show
   // 按楼层顺序排序（30层到-1层，从高到低）
   const sortedFloors = Array.from({ length: 30 }, (_, i) => `${30 - i}层`).concat(['-1层'])
   const sortedFloorStats = sortedFloors.map(floor => 
-    floorStats.find(stat => stat.floor === floor) || { floor, totalEnergy: '0', totalPower: '0' }
+    floorStats.find(stat => stat.floor === floor) || { 
+      floor, 
+      totalEnergy: '0', 
+      totalPower: '0',
+      acEnergy: '0',
+      acPower: '0',
+      lightEnergy: '0',
+      lightPower: '0'
+    }
   )
 
   return (
@@ -280,13 +305,39 @@ const MiddleColumn: React.FC<MiddleColumnProps> = ({ showAIAnalysis = true, show
               <div className="floor-summary">
                 <div className="floor-number">{floor}</div>
                 <div className="floor-metrics">
-                  <div className="floor-metric">
-                    <EnergyIcon className="metric-icon" />
-                    <span className="metric-value">{floorStat?.totalEnergy || '0'}度</span>
+                  <div className="total-metrics-row">
+                    <div className="floor-metric">
+                      <EnergyIcon className="metric-icon" />
+                      <span className="metric-value">{floorStat?.totalEnergy || '0'}度</span>
+                    </div>
+                    <div className="floor-metric">
+                      <PowerIcon className="metric-icon circle-icon" />
+                      <span className="metric-value">{floorStat?.totalPower || '0'}kW</span>
+                    </div>
                   </div>
-                  <div className="floor-metric">
-                    <PowerIcon className="metric-icon circle-icon" />
-                    <span className="metric-value">{floorStat?.totalPower || '0'}kW</span>
+                  <div 
+                    className="floor-metric clickable-metric"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      onACFloorPlanClick?.(floor)
+                    }}
+                    style={{ cursor: 'pointer' }}
+                    title="查看空调设备分布"
+                  >
+                    <AirConditionerIcon className="metric-icon" />
+                    <span className="metric-value">{floorStat?.acEnergy || '0'}度 / {floorStat?.acPower || '0'}kW</span>
+                  </div>
+                  <div 
+                    className="floor-metric clickable-metric"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      onLightFloorPlanClick?.(floor)
+                    }}
+                    style={{ cursor: 'pointer' }}
+                    title="查看照明设备分布"
+                  >
+                    <LightOnIcon className="metric-icon" />
+                    <span className="metric-value">{floorStat?.lightEnergy || '0'}度 / {floorStat?.lightPower || '0'}kW</span>
                   </div>
                 </div>
               </div>

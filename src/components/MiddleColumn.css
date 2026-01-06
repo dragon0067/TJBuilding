@@ -176,7 +176,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  width: 120px;
+  width: 160px;
   flex-shrink: 0;
   padding-right: 10px;
   border-right: 1px solid #F0F5FF;
@@ -194,11 +194,19 @@
   gap: 6px;
 }
 
+.total-metrics-row {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+}
+
 .floor-metric {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 13px;
+  font-size: 12px;
+  line-height: 1.4;
 }
 
 .metric-icon {
@@ -218,6 +226,19 @@
 .metric-value {
   color: #333333;
   font-weight: 500;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.clickable-metric {
+  transition: all 0.2s ease;
+}
+
+.clickable-metric:hover {
+  background: rgba(62, 123, 250, 0.1);
+  border-radius: 4px;
+  padding: 2px 4px;
+  margin: -2px -4px;
 }
 
 .rooms-list {

@@ -85,15 +85,20 @@ const FloorPlan: React.FC<FloorPlanProps> = ({
   const containerRef = useRef<HTMLDivElement>(null)
 
   // 默认平面图（如果没有提供）
-  const defaultImage = '/智慧楼宇图标/数据大屏/logo.png' // 可以替换为实际的平面图
+  const defaultImage = '' // 不显示默认图片
   const imageSrc = floorPlanImage || defaultImage
 
   // 监听图片加载
   useEffect(() => {
+    if (!imageSrc) {
+      // 如果没有图片，直接设置为已加载状态
+      setImageLoaded(true)
+      return
+    }
     if (imageRef.current && imageRef.current.complete) {
       handleImageLoad()
     }
-  }, [isOpen])
+  }, [isOpen, imageSrc])
 
   const handleImageLoad = () => {
     if (imageRef.current) {
@@ -204,14 +209,16 @@ const FloorPlan: React.FC<FloorPlanProps> = ({
         <div className={styles.content} ref={containerRef}>
           {/* 平面图容器 */}
           <div className={styles.imageContainer}>
-            <img
-              ref={imageRef}
-              src={imageSrc}
-              alt={floorName}
-              className={styles.image}
-              onLoad={handleImageLoad}
-              style={{ opacity: imageLoaded ? 1 : 0 }}
-            />
+            {imageSrc && (
+              <img
+                ref={imageRef}
+                src={imageSrc}
+                alt={floorName}
+                className={styles.image}
+                onLoad={handleImageLoad}
+                style={{ opacity: imageLoaded ? 1 : 0 }}
+              />
+            )}
             
             {/* 设备图标层 */}
             {imageLoaded && devices.map((device) => {

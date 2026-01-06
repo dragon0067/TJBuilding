@@ -40,6 +40,32 @@
   animation: slideUp 0.3s ease;
 }
 
+/* 可滚动内容容器 */
+.modalScrollable {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modalScrollable::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modalScrollable::-webkit-scrollbar-track {
+  background: #0f0f1e;
+}
+
+.modalScrollable::-webkit-scrollbar-thumb {
+  background: #3E7BFA;
+  border-radius: 4px;
+}
+
+.modalScrollable::-webkit-scrollbar-thumb:hover {
+  background: #2E5FD9;
+}
+
 @keyframes slideUp {
   from {
     opacity: 0;
@@ -90,6 +116,7 @@
 /* 内容区域 */
 .content {
   flex: 1;
+  min-height: 0;
   display: flex;
   overflow: hidden;
   background: #0f0f1e;
@@ -177,6 +204,20 @@
 .deviceMarker.selected {
   transform: translate(-50%, -50%) scale(1.3);
   z-index: 30;
+}
+
+.deviceMarker.groupSelected {
+  z-index: 25;
+  animation: groupPulse 2s ease-in-out infinite;
+}
+
+@keyframes groupPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(62, 123, 250, 0.8), 0 0 40px rgba(62, 123, 250, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(62, 123, 250, 1), 0 0 60px rgba(62, 123, 250, 0.6);
+  }
 }
 
 .deviceMarkerOn {
@@ -344,12 +385,12 @@
   flex-shrink: 0;
 }
 
-.deviceListStatus.on {
+.deviceListStatusOn {
   background: rgba(76, 175, 80, 0.2);
   color: #4CAF50;
 }
 
-.deviceListStatus.off {
+.deviceListStatusOff {
   background: rgba(158, 158, 158, 0.2);
   color: #9E9E9E;
 }

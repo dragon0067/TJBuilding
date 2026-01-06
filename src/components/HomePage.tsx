@@ -1,4 +1,4 @@
-import React, { useState, lazy, Suspense, useEffect } from 'react'
+import React, { useState, lazy, Suspense, useEffect, useMemo } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import MiddleColumn from './MiddleColumn'
@@ -10,6 +10,8 @@ import './HomePage.css'
 
 // 延迟加载 FloorPlan 组件，避免 CSS 影响首页
 const FloorPlan = lazy(() => import('./FloorPlan'))
+const LightFloorPlan = lazy(() => import('./LightFloorPlan'))
+const ACFloorPlan = lazy(() => import('./ACFloorPlan'))
 
 interface HomePageProps {
   showRoomControl?: boolean
@@ -31,6 +33,10 @@ const HomePage: React.FC<HomePageProps> = ({ showRoomControl: propShowRoomContro
   const [showFloorPlan, setShowFloorPlan] = useState(false)
   const [floorPlanFloor, setFloorPlanFloor] = useState<string | null>(null)
   const [floorPlanRoom, setFloorPlanRoom] = useState<string | null>(null)
+  const [showACFloorPlan, setShowACFloorPlan] = useState(false)
+  const [acFloorPlanFloor, setACFloorPlanFloor] = useState<string | null>(null)
+  const [showLightFloorPlan, setShowLightFloorPlan] = useState(false)
+  const [lightFloorPlanFloor, setLightFloorPlanFloor] = useState<string | null>(null)
   const [currentTime, setCurrentTime] = useState(new Date())
   
   // 计算是否为楼层模式
@@ -63,6 +69,27 @@ const HomePage: React.FC<HomePageProps> = ({ showRoomControl: propShowRoomContro
     setFloorPlanFloor(floor)
     setFloorPlanRoom(roomName)
     setShowFloorPlan(true)
+  }
+
+  // 处理空调平面图点击
+  const handleACFloorPlanClick = (floor: string) => {
+    setACFloorPlanFloor(floor)
+    setShowACFloorPlan(true)
+  }
+
+  // 处理照明平面图点击
+  const handleLightFloorPlanClick = (floor: string) => {
+    setLightFloorPlanFloor(floor)
+    setShowLightFloorPlan(true)
+  }
+
+  // 简单的随机数生成器（基于种子）- 确保同一楼层的数据保持一致
+  const seededRandom = (seed: number) => {
+    let value = seed
+    return () => {
+      value = (value * 9301 + 49297) % 233280
+      return value / 233280
+    }
   }
 
   // 示例设备数据（实际应该从API获取）
@@ -123,6 +150,80 @@ const HomePage: React.FC<HomePageProps> = ({ showRoomControl: propShowRoomContro
     ]
   }
 
+  // 获取楼层所有空调设备数据（实际应该从API获取）
+  // 使用 useMemo 缓存，确保同一楼层的数据保持一致
+  const getACFloorPlanDevices = useMemo(() => {
+    return (floor: string) => {
+      // 根据楼层名称生成固定种子，确保同一楼层的数据一致
+      const seed = floor.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) + 1000
+      const random = seededRandom(seed)
+      
+      // 根据楼层返回该楼层所有房间的空调设备
+      // 这里使用示例数据，实际应该从API获取
+      const devices = []
+      for (let i = 1; i <= 10; i++) {
+        // 使用固定种子生成随机数，确保每次调用结果一致
+        const statusRandom = random()
+        const posXRandom = random()
+        const posYRandom = random()
+        const powerRandom = random()
+        const tempRandom = random()
+        
+        devices.push({
+          id: `ac-${floor}-${i}`,
+          name: `${floor}-空调-${String(i).padStart(3, '0')}`,
+          type: 'airConditioner' as const,
+          status: (statusRandom > 0.3 ? 'on' : 'off') as const,
+          position: { 
+            x: 10 + (i % 5) * 20 + posXRandom * 5, 
+            y: 20 + Math.floor(i / 5) * 30 + posYRandom * 5 
+          },
+          room: `${floor}-房间${i}`,
+          power: 1500 + Math.floor(powerRandom * 1000),
+          temperature: 20 + Math.floor(tempRandom * 8),
+          description: '中央空调系统'
+        })
+      }
+      return devices
+    }
+  }, [])
+
+  // 获取楼层所有照明设备数据（实际应该从API获取）
+  // 使用 useMemo 缓存，确保同一楼层的数据保持一致
+  const getLightFloorPlanDevices = useMemo(() => {
+    return (floor: string) => {
+      // 根据楼层名称生成固定种子，确保同一楼层的数据一致
+      const seed = floor.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
+      const random = seededRandom(seed)
+      
+      // 根据楼层返回该楼层所有房间的照明设备
+      // 这里使用示例数据，实际应该从API获取
+      const devices = []
+      for (let i = 1; i <= 10; i++) {
+        // 使用固定种子生成随机数，确保每次调用结果一致
+        const statusRandom = random()
+        const posXRandom = random()
+        const posYRandom = random()
+        const powerRandom = random()
+        
+        devices.push({
+          id: `light-${floor}-${i}`,
+          name: `${floor}-照明-${String(i).padStart(3, '0')}`,
+          type: 'light' as const,
+          status: (statusRandom > 0.3 ? 'on' : 'off') as const,
+          position: { 
+            x: 10 + (i % 5) * 20 + posXRandom * 5, 
+            y: 20 + Math.floor(i / 5) * 30 + posYRandom * 5 
+          },
+          room: `${floor}-房间${i}`,
+          power: 30 + Math.floor(powerRandom * 40),
+          description: 'LED照明灯'
+        })
+      }
+      return devices
+    }
+  }, [])
+
   return (
     <div className="home-page">
       <Sidebar onCollapseChange={setSidebarCollapsed} />
@@ -182,6 +283,8 @@ const HomePage: React.FC<HomePageProps> = ({ showRoomControl: propShowRoomContro
                 setStatisticsVisible(true) // 点击房间时自动显示统计
               }}
               onFloorPlanClick={handleFloorPlanClick}
+              onACFloorPlanClick={handleACFloorPlanClick}
+              onLightFloorPlanClick={handleLightFloorPlanClick}
             />
           )}
         </div>
@@ -225,6 +328,38 @@ const HomePage: React.FC<HomePageProps> = ({ showRoomControl: propShowRoomContro
             }}
             floorName={floorPlanRoom ? `${floorPlanFloor} - ${floorPlanRoom}` : (floorPlanFloor || '平面图')}
             devices={getFloorPlanDevices()}
+          />
+        </Suspense>
+      )}
+
+      {/* 空调平面图组件 */}
+      {showACFloorPlan && acFloorPlanFloor && (
+        <Suspense fallback={null}>
+          <ACFloorPlan
+            key={`acfloorplan-${acFloorPlanFloor}`}
+            isOpen={showACFloorPlan}
+            onClose={() => {
+              setShowACFloorPlan(false)
+              setACFloorPlanFloor(null)
+            }}
+            floorName={acFloorPlanFloor}
+            devices={getACFloorPlanDevices(acFloorPlanFloor)}
+          />
+        </Suspense>
+      )}
+
+      {/* 照明平面图组件 */}
+      {showLightFloorPlan && lightFloorPlanFloor && (
+        <Suspense fallback={null}>
+          <LightFloorPlan
+            key={`lightfloorplan-${lightFloorPlanFloor}`}
+            isOpen={showLightFloorPlan}
+            onClose={() => {
+              setShowLightFloorPlan(false)
+              setLightFloorPlanFloor(null)
+            }}
+            floorName={lightFloorPlanFloor}
+            devices={getLightFloorPlanDevices(lightFloorPlanFloor)}
           />
         </Suspense>
       )}
