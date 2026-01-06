@@ -1,0 +1,105 @@
+.ai-analysis {
+  background: #FFFFFF;
+  border: 1px solid #EEEEEE;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.ai-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ai-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333333;
+  margin: 0;
+}
+
+.ai-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.room-select {
+  padding: 8px 16px;
+  background: #FFFFFF;
+  border: 1px solid #DDDDDD;
+  border-radius: 6px;
+  color: #333333;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.room-select:hover {
+  border-color: #3E7BFA;
+}
+
+.room-select:focus {
+  border-color: #3E7BFA;
+  box-shadow: 0 0 0 2px rgba(62, 123, 250, 0.1);
+}
+
+.time-tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.time-tab {
+  padding: 8px 16px;
+  background: #F8FAFF;
+  border: 1px solid #EEEEEE;
+  border-radius: 6px;
+  color: #666666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.time-tab:hover {
+  background: #F0F5FF;
+  border-color: #3E7BFA;
+  color: #333333;
+}
+
+.time-tab.active {
+  background: #3E7BFA;
+  border-color: #3E7BFA;
+  color: #FFFFFF;
+  font-weight: bold;
+}
+
+.ai-charts {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 15px;
+  height: 300px;
+}
+
+.chart-container {
+  height: 100%;
+  min-height: 300px;
+}
+
+@media (max-width: 1400px) {
+  .ai-charts {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  
+  .chart-container {
+    height: 400px;
+  }
+}
+

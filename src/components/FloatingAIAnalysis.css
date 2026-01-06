@@ -1,0 +1,178 @@
+/* 悬浮AI分析组件样式 */
+
+/* 悬浮按钮 */
+.floating-ai-button {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3E7BFA 0%, #2E5FD9 100%);
+  border: none;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(62, 123, 250, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  gap: 2px;
+}
+
+.floating-ai-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(62, 123, 250, 0.6);
+}
+
+.floating-ai-button:active {
+  transform: scale(0.95);
+}
+
+.floating-ai-button.open {
+  background: linear-gradient(135deg, #F96418 0%, #E8540A 100%);
+  box-shadow: 0 4px 12px rgba(249, 100, 24, 0.4);
+}
+
+.floating-ai-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.floating-ai-button-text {
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* 悬浮窗口 */
+.floating-ai-window {
+  position: fixed;
+  bottom: 100px;
+  left: 30px;
+  width: 500px;
+  max-height: 70vh;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  z-index: 999;
+  animation: slideUp 0.3s ease;
+  overflow: hidden;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 头部 */
+.floating-ai-header {
+  background: linear-gradient(135deg, #3E7BFA 0%, #2E5FD9 100%);
+  color: white;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.floating-ai-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.ai-icon-large {
+  font-size: 20px;
+}
+
+.floating-ai-close {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.floating-ai-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* 内容区域 */
+.floating-ai-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+  background: #F8F9FA;
+  min-height: 300px;
+  max-height: calc(70vh - 80px);
+}
+
+.floating-ai-content .statistics-ai-analysis {
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  padding: 20px;
+}
+
+.floating-ai-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.floating-ai-content::-webkit-scrollbar-track {
+  background: #F1F1F1;
+}
+
+.floating-ai-content::-webkit-scrollbar-thumb {
+  background: #CCCCCC;
+  border-radius: 3px;
+}
+
+.floating-ai-content::-webkit-scrollbar-thumb:hover {
+  background: #AAAAAA;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .floating-ai-window {
+    width: calc(100vw - 60px);
+    left: 30px;
+    right: 30px;
+    max-height: 80vh;
+  }
+
+  .floating-ai-button {
+    bottom: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .floating-ai-button svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .floating-ai-button-text {
+    font-size: 9px;
+  }
+}
+

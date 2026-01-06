@@ -1,0 +1,130 @@
+.building-tree-panel {
+  width: 240px;
+  height: 100vh;
+  background: #FFFFFF;
+  border-right: 1px solid #EEEEEE;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: width 0.3s ease;
+}
+
+.building-tree-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 12px;
+}
+
+.building-node {
+  margin-bottom: 8px;
+}
+
+.building-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333333;
+}
+
+.building-header:hover {
+  background: transparent;
+}
+
+.expand-icon {
+  font-size: 12px;
+  color: #666666;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+  width: 16px;
+  display: inline-block;
+  text-align: center;
+}
+
+.expand-icon.expanded {
+  transform: rotate(0deg);
+}
+
+.building-name {
+  flex: 1;
+}
+
+.floors-list {
+  margin-left: 20px;
+  margin-top: 4px;
+}
+
+.floor-node {
+  margin-bottom: 0;
+  position: relative;
+}
+
+.floor-header {
+  padding: 8px 0;
+  font-size: 13px;
+  color: #333333;
+  font-weight: 500;
+}
+
+.building-tree-panel .rooms-list {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  margin-left: 20px;
+  margin-top: 2px;
+  margin-bottom: 8px;
+}
+
+.floor-divider {
+  height: 1px;
+  background: #3E7BFA;
+  margin: 8px 0;
+  margin-left: 0;
+}
+
+.building-tree-panel .room-item {
+  display: block !important;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: #333333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 2px;
+  width: 100%;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.room-item:hover {
+  background: #F5F5F5;
+  color: #333333;
+}
+
+.room-item.active {
+  background: #3E7BFA;
+  color: #FFFFFF;
+}
+
+/* 滚动条样式 */
+.building-tree-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.building-tree-content::-webkit-scrollbar-track {
+  background: #F8FAFF;
+}
+
+.building-tree-content::-webkit-scrollbar-thumb {
+  background: #D0D8E8;
+  border-radius: 2px;
+}
+
+.building-tree-content::-webkit-scrollbar-thumb:hover {
+  background: #B0B8C8;
+}
+
+

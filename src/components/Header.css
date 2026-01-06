@@ -1,0 +1,138 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background: #FFFFFF;
+  border-bottom: 1px solid #EEEEEE;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+.header-tabs {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 0 40px;
+}
+
+.header-tab {
+  padding: 8px 24px;
+  border: none;
+  background: transparent;
+  color: #666666;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.header-tab:hover {
+  background: #F8FAFF;
+  color: #3E7BFA;
+}
+
+.header-tab.active {
+  color: #3E7BFA;
+  font-weight: 600;
+}
+
+.header-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  background: #3E7BFA;
+  border-radius: 2px;
+}
+
+.header-logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+.header-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #3E7BFA;
+  margin: 0;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.fullscreen-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: #F8FAFF;
+  border: 1px solid #EEEEEE;
+  border-radius: 6px;
+  color: #3E7BFA;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  padding: 0;
+}
+
+.fullscreen-btn:hover {
+  background: #F0F5FF;
+  border-color: #3E7BFA;
+  transform: scale(1.05);
+}
+
+.fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+}
+
+.user-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.user-name {
+  color: #333333;
+}
+
+.time-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+}
+
+.time {
+  font-size: 24px;
+  font-weight: bold;
+  color: #3E7BFA;
+  font-variant-numeric: tabular-nums;
+}
+
+.date {
+  font-size: 14px;
+  color: #666666;
+}

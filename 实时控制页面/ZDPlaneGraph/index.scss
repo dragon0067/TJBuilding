@@ -1,0 +1,291 @@
+.planegraph-row {
+  display: flex;
+  align-items: stretch;
+}
+// 区域树
+.area-tree-section {
+  position: relative;
+  width: 3.8rem;
+  margin: 0.1rem 0.1rem 0 0.05rem;
+  height: 9.94rem;
+
+  .tree-search {
+    margin-top: 0.1rem;
+    padding: 0 0.2rem;
+    display: flex;
+    flex-direction: column;
+
+    >>> {
+      .el-input > .el-input__inner {
+        background-color: rgba(208, 210, 211, 0.2);
+        color: #fff;
+        height: 0.35rem;
+      }
+
+      .el-button--medium {
+        padding: 0.1rem 0.1rem;
+        // margin-left: 10px;
+      }
+    }
+  }
+}
+
+.tl-corner {
+  position: absolute;
+  width: 0.1rem;
+  height: 0.1rem;
+  left: -0.01rem;
+  top: -0.01rem;
+  border-top: 0.01rem solid #fff;
+  border-left: 0.01rem solid #fff;
+}
+
+.tr-corner {
+  width: 0.1rem;
+  height: 0.1rem;
+  position: absolute;
+  right: -0.01rem;
+  top: -0.01rem;
+  border-top: 0.01rem solid #fff;
+  border-right: 0.01rem solid #fff;
+}
+
+.bl-corner {
+  width: 0.1rem;
+  height: 0.1rem;
+  position: absolute;
+  left: -0.01rem;
+  bottom: -0.01rem;
+  border-bottom: 0.01rem solid #fff;
+  border-left: 0.01rem solid #fff;
+}
+
+.br-corner {
+  width: 0.1rem;
+  height: 0.1rem;
+  position: absolute;
+  right: -0.01rem;
+  bottom: -0.01rem;
+  border-bottom: 0.01rem solid #fff;
+  border-right: 0.01rem solid #fff;
+}
+
+.scrollbar-box {
+  height: 9.04rem;
+}
+
+//平面图
+.planeimg-war {
+  border: solid 0.01rem #3696c2;
+  box-shadow: 0 0 20px 0px inset rgba(30, 144, 255, 0.6);
+  background-color: #1c2961;
+  margin: 0.1rem 0.1rem 0 0.05rem;
+
+  box-sizing: border-box;
+  box-shadow: inset 0rem 0rem 0.1rem 0rem rgba(14, 62, 184, 0.34);
+
+  border: solid 0.01rem #2e9eff;
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+.maps-img {
+  height: 9.94rem;
+  width: 100%;
+  background-size: 100% 100%;
+  background-position: center;
+  position: relative;
+}
+::v-deep .boxDom {
+  width: 34px;
+  height: 50px;
+  position: absolute;
+  cursor: pointer;
+  transform: translate(-50%, 0%);
+  z-index: 999;
+}
+
+.tab-btn-row {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+}
+.tab-btn {
+  cursor: pointer;
+}
+
+//
+.pointprodlist-row {
+  background-color: #ffffff;
+  box-shadow: -4px 2px 10px 1px rgba(99, 151, 222, 0.8);
+  border-radius: 0.04rem;
+  position: absolute;
+  padding-top: 0.13rem;
+  z-index: 999;
+}
+
+.pointprodlist-box {
+  margin: 0 0.14rem;
+  // border-bottom: 1px solid #d5d5d5;
+  padding-bottom: 0.19rem;
+  padding-top: 0.08rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+.pointprodlist-box:last-child {
+  border-bottom: 0px solid #d5d5d5;
+}
+::v-deep .pointprodlist-infos .prod-on path {
+  fill: #fff !important;
+}
+::v-deep .pointprodlist-infos .prod-off path {
+  fill: #fff !important;
+}
+.pointprodlist-name {
+  width: 1.12rem;
+  font-size: 0.14rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pointprodlist-infos {
+  padding: 0.1rem;
+  border: 1px solid #515a83;
+  border-radius: 5px;
+  margin: 0.1rem;
+  display: flex;
+  align-items: center;
+
+  span {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.pointprodlist-click {
+  display: flex;
+  align-items: center;
+  ::v-deep .el-switch {
+    line-height: 35px;
+    height: 35px;
+  }
+  ::v-deep .el-switch__core {
+    width: 0.75rem !important;
+    height: 0.35rem;
+    border-radius: 0.175rem;
+    transition: border-color 0s, background-color 0s;
+  }
+  ::v-deep .el-switch__core:after {
+    width: 0.27rem;
+    height: 0.27rem;
+    top: 0.03rem;
+    transition: all 0s;
+  }
+  ::v-deep .el-switch.is-checked .el-switch__core::after {
+    margin-left: -0.27rem;
+    transition: all 0s;
+  }
+}
+.pointprodlist-time {
+  font-size: 0.14rem;
+  color: #111319;
+}
+.pointprodlist-conter {
+  margin-left: 0.1rem;
+}
+
+.pointprodlist-close {
+  color: #f73131;
+  font-size: 0.4rem;
+  position: absolute;
+  top: -0.3rem;
+  cursor: pointer;
+  right: -0.2rem;
+  background: #fff;
+  border-radius: 50%;
+}
+.boli {
+  /* 相对定位 */
+  position: relative;
+  overflow: hidden;
+}
+.wh_slide {
+  background: #000;
+}
+.boli::after {
+  content: "";
+  /* 绝对定位 */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 170px;
+  height: 70px;
+  /* 背景渐变色 */
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0));
+  /* 让元素旋转-45度 位置距离距离左边不变化，距离下面走360像素的距离 */
+  -webkit-animation: rotatestroke 2s infinite linear;
+  animation: rotatestroke 2s infinite linear;
+}
+@keyframes rotatestroke {
+  0% {
+    transform: rotate(-45deg) translate(0, -360px);
+  }
+
+  50% {
+    transform: rotate(-45deg) translate(0, -130px);
+  }
+
+  100% {
+    transform: rotate(-45deg) translate(0, 100px);
+  }
+}
+.maps-img {
+  .swiper {
+    width: 100%;
+
+    & ::v-deep .swiper-container {
+      width: 100%;
+
+      .swiper-slide {
+        width: 100%;
+        height: 642px;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+      }
+
+      .swiper-pagination {
+        .swiper-pagination-bullet-active {
+          background-color: #f29b76;
+        }
+      }
+    }
+  }
+}
+::v-deep .swiper-button-prev,
+::v-deep .swiper-button-next {
+  position: inherit;
+  background-image: none !important;
+  width: auto;
+  height: auto;
+}
+::v-deep .swiper-button-prev.swiper-button-disabled,
+::v-deep .swiper-button-next.swiper-button-disabled {
+  display: none;
+}

@@ -1,0 +1,154 @@
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 10px;
+  min-height: 0;
+  height: 100%;
+}
+
+.left-column::-webkit-scrollbar {
+  width: 6px;
+}
+
+.left-column::-webkit-scrollbar-track {
+  background: #F8FAFF;
+  border-radius: 3px;
+}
+
+.left-column::-webkit-scrollbar-thumb {
+  background: #3E7BFA;
+  border-radius: 3px;
+}
+
+.status-card {
+  background: #FFFFFF;
+  border: 1px solid #EEEEEE;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+}
+
+.status-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.status-value {
+  font-size: 22px;
+  font-weight: bold;
+  color: #3E7BFA;
+}
+
+.status-label {
+  font-size: 14px;
+  color: #666666;
+}
+
+.stat-card,
+.chart-card {
+  background: #FFFFFF;
+  border: 1px solid #EEEEEE;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 5px;
+}
+
+.stat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.card-subtitle {
+  font-size: 12px;
+  color: #999999;
+  margin: 0;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.stat-item {
+  background: #FFFFFF;
+  border: none;
+  border-radius: 0;
+  padding: 12px 0;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-item:hover {
+  background: transparent;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #666666;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.stat-line {
+  height: 3px;
+  width: 140px;
+  border-radius: 2px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.stat-line-blue {
+  background: #87CEEB;
+}
+
+.stat-line-orange {
+  background: #FFA500;
+}
+
+.stat-line-green {
+  background: #32CD32;
+}
+
+.stat-line-red {
+  background: #FF6347;
+}

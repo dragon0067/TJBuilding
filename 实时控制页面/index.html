@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>房间控制页面</title>
+  <!-- Element UI CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui@2.15.14/lib/theme-chalk/index.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    #app {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <!-- Vue 2 -->
+  <script src="https://unpkg.com/vue@2.7.14/dist/vue.js"></script>
+  <!-- Element UI JS -->
+  <script src="https://unpkg.com/element-ui@2.15.14/lib/index.js"></script>
+  <!-- Axios -->
+  <script src="https://unpkg.com/axios@1.6.0/dist/axios.min.js"></script>
+  <!-- Moment.js -->
+  <script src="https://unpkg.com/moment@2.29.4/moment.js"></script>
+
+  <script>
+    // 从URL参数获取房间信息
+    function getUrlParams() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        floor: params.get('floor') || '',
+        roomName: params.get('roomName') || ''
+      };
+    }
+
+    // 根据房间信息生成模拟数据
+    function generateMockData(floor, roomName) {
+      // 根据房间名称生成一个简单的areaId（模拟）
+      const areaId = Math.abs(hashCode(roomName)) % 10000 + 1;
+      
+      return {
+        organId: 1, // 模拟网点ID
+        areaId: areaId,
+        areaType: 'room', // 区域类型
+        isShowPlan: true, // 显示平面图
+        audioRecognitionList: [] // 语音识别列表
+      };
+    }
+
+    // 简单的字符串hash函数
+    function hashCode(str) {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        const char = str.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash; // Convert to 32bit integer
+      }
+      return hash;
+    }
+
+    // 创建Vue应用
+    const { floor, roomName } = getUrlParams();
+    const mockData = generateMockData(floor, roomName);
+
+    // 注意：这里需要动态加载UserOperation组件
+    // 由于UserOperation.vue依赖很多其他组件，这里先创建一个占位页面
+    // 实际使用时需要配置webpack/vite来编译Vue文件
+    
+    new Vue({
+      el: '#app',
+      data() {
+        return {
+          floor: floor,
+          roomName: roomName,
+          loading: false
+        };
+      },
+      mounted() {
+        console.log('房间控制页面加载', {
+          floor: this.floor,
+          roomName: this.roomName,
+          mockData: mockData
+        });
+        
+        // 这里应该加载UserOperation组件
+        // 由于UserOperation.vue依赖复杂，暂时显示一个提示信息
+        this.$message({
+          message: `正在加载房间控制页面: ${this.roomName} (${this.floor})`,
+          type: 'info',
+          duration: 3000
+        });
+      },
+      computed: {
+        mockDataString() {
+          return JSON.stringify(mockData, null, 2);
+        }
+      },
+      template: `
+        <div style="width: 100%; height: 100%; padding: 20px; background: #0a0e27; color: #fff; overflow-y: auto;">
+          <div style="margin-bottom: 20px;">
+            <h2 style="color: #00d6ff; margin-bottom: 15px;">房间控制页面</h2>
+            <p style="margin: 10px 0;"><strong>楼层:</strong> {{ floor || '未指定' }}</p>
+            <p style="margin: 10px 0;"><strong>房间名称:</strong> {{ roomName || '未指定' }}</p>
+            <div style="margin-top: 30px; padding: 15px; background: rgba(0, 214, 255, 0.1); border-left: 3px solid #00d6ff;">
+              <p style="color: #00d6ff; margin-bottom: 10px;"><strong>UserOperation组件参数:</strong></p>
+              <pre style="color: #999; font-size: 12px; white-space: pre-wrap;">{{ mockDataString }}</pre>
+            </div>
+            <div style="margin-top: 20px; padding: 15px; background: rgba(255, 188, 39, 0.1); border-left: 3px solid #ffbc27;">
+              <p style="color: #ffbc27; margin-bottom: 10px;"><strong>注意:</strong></p>
+              <p style="color: #999; font-size: 14px; line-height: 1.6;">
+                UserOperation组件需要完整的Vue2构建环境。当前为演示版本，实际使用时需要配置Vue2构建工具来编译UserOperation.vue组件。
+                <br><br>
+                要完整集成UserOperation组件，需要：
+                <br>1. 配置Vue2构建工具（如webpack或vite）
+                <br>2. 安装所有依赖组件（DataStatistics、ProbeTiming等）
+                <br>3. 配置API接口和工具函数
+              </p>
+            </div>
+          </div>
+          <!-- 这里应该渲染UserOperation组件 -->
+          <!-- <user-operation 
+            :organ-id="mockData.organId"
+            :area-id="mockData.areaId"
+            :area-type="mockData.areaType"
+            :is-show-plan="mockData.isShowPlan"
+            :audio-recognition-list="mockData.audioRecognitionList"
+          /> -->
+        </div>
+      `
+    });
+  </script>
+</body>
+</html>
+
